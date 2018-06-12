@@ -1,0 +1,168 @@
+CGMLOG file for Parallel_plates_injection.000.cgm
+
+0 1 Step 0    
+0 2 Step 0    
+0 3 Step 0    
+0 4 Step 0    
+0 5 Step 25    
+1 1 Step 25 Hot plate source Z (m) R (m) 
+0 6 Step 50 Phi [V] Z [m]  
+1 2 Step 50 Hot plate source Z (m) R (m) 
+0 7 Step 75 Phi [V] Z [m]  
+1 3 Step 75 Hot plate source Z (m) R (m) 
+0 8 Step 100 Phi [V] Z [m]  
+1 4 Step 100 Hot plate source Z (m) R (m) 
+0 9 Step 125 Phi [V] Z [m]  
+1 5 Step 125 Hot plate source Z (m) R (m) 
+0 10 Step 150 Phi [V] Z [m]  
+1 6 Step 150 Hot plate source Z (m) R (m) 
+0 11 Step 175 Phi [V] Z [m]  
+1 7 Step 175 Hot plate source Z (m) R (m) 
+0 12 Step 200 Phi [V] Z [m]  
+1 8 Step 200 Hot plate source Z (m) R (m) 
+0 13 Step 225 Phi [V] Z [m]  
+1 9 Step 225 Hot plate source Z (m) R (m) 
+0 14 Step 250 Phi [V] Z [m]  
+1 10 Step 250 Hot plate source Z (m) R (m) 
+0 15 Step 275 Phi [V] Z [m]  
+1 11 Step 275 Hot plate source Z (m) R (m) 
+0 16 Step 300 Phi [V] Z [m]  
+1 12 Step 300 Hot plate source Z (m) R (m) 
+0 17 Step 325 Phi [V] Z [m]  
+1 13 Step 325 Hot plate source Z (m) R (m) 
+0 18 Step 350 Phi [V] Z [m]  
+1 14 Step 350 Hot plate source Z (m) R (m) 
+0 19 Step 375 Phi [V] Z [m]  
+1 15 Step 375 Hot plate source Z (m) R (m) 
+0 20 Step 400 Phi [V] Z [m]  
+1 16 Step 400 Hot plate source Z (m) R (m) 
+0 21 Step 425 Phi [V] Z [m]  
+1 17 Step 425 Hot plate source Z (m) R (m) 
+0 22 Step 450 Phi [V] Z [m]  
+1 18 Step 450 Hot plate source Z (m) R (m) 
+0 23 Step 475 Phi [V] Z [m]  
+1 19 Step 475 Hot plate source Z (m) R (m) 
+0 24 Step 500 Phi [V] Z [m]  
+1 20 Step 500 Hot plate source Z (m) R (m) 
+0 25 Step 525 Phi [V] Z [m]  
+1 21 Step 525 Hot plate source Z (m) R (m) 
+0 26 Step 550 Phi [V] Z [m]  
+1 22 Step 550 Hot plate source Z (m) R (m) 
+0 27 Step 575 Phi [V] Z [m]  
+1 23 Step 575 Hot plate source Z (m) R (m) 
+0 28 Step 600 Phi [V] Z [m]  
+1 24 Step 600 Hot plate source Z (m) R (m) 
+0 29 Step 625 Phi [V] Z [m]  
+1 25 Step 625 Hot plate source Z (m) R (m) 
+0 30 Step 650 Phi [V] Z [m]  
+1 26 Step 650 Hot plate source Z (m) R (m) 
+0 31 Step 675 Phi [V] Z [m]  
+1 27 Step 675 Hot plate source Z (m) R (m) 
+0 32 Step 700 Phi [V] Z [m]  
+1 28 Step 700 Hot plate source Z (m) R (m) 
+0 33 Step 725 Phi [V] Z [m]  
+1 29 Step 725 Hot plate source Z (m) R (m) 
+0 34 Step 750 Phi [V] Z [m]  
+1 30 Step 750 Hot plate source Z (m) R (m) 
+0 35 Step 775 Phi [V] Z [m]  
+1 31 Step 775 Hot plate source Z (m) R (m) 
+0 36 Step 800 Phi [V] Z [m]  
+1 32 Step 800 Hot plate source Z (m) R (m) 
+0 37 Step 825 Phi [V] Z [m]  
+1 33 Step 825 Hot plate source Z (m) R (m) 
+0 38 Step 850 Phi [V] Z [m]  
+1 34 Step 850 Hot plate source Z (m) R (m) 
+0 39 Step 875 Phi [V] Z [m]  
+1 35 Step 875 Hot plate source Z (m) R (m) 
+0 40 Step 900 Phi [V] Z [m]  
+1 36 Step 900 Hot plate source Z (m) R (m) 
+0 41 Step 925 Phi [V] Z [m]  
+1 37 Step 925 Hot plate source Z (m) R (m) 
+0 42 Step 950 Phi [V] Z [m]  
+1 38 Step 950 Hot plate source Z (m) R (m) 
+0 43 Step 975 Phi [V] Z [m]  
+1 39 Step 975 Hot plate source Z (m) R (m) 
+0 44 Step 1000 Phi [V] Z [m]  
+1 40 Step 1000 Hot plate source Z (m) R (m) 
+0 45 Step 1025 Phi [V] Z [m]  
+1 41 Step 1025 Hot plate source Z (m) R (m) 
+0 46 Step 1050 Phi [V] Z [m]  
+1 42 Step 1050 Hot plate source Z (m) R (m) 
+0 47 Step 1075 Phi [V] Z [m]  
+1 43 Step 1075 Hot plate source Z (m) R (m) 
+0 48 Step 1100 Phi [V] Z [m]  
+1 44 Step 1100 Hot plate source Z (m) R (m) 
+0 49 Step 1125 Phi [V] Z [m]  
+1 45 Step 1125 Hot plate source Z (m) R (m) 
+0 50 Step 1150 Phi [V] Z [m]  
+1 46 Step 1150 Hot plate source Z (m) R (m) 
+0 51 Step 1175 Phi [V] Z [m]  
+1 47 Step 1175 Hot plate source Z (m) R (m) 
+0 52 Step 1200 Phi [V] Z [m]  
+1 48 Step 1200 Hot plate source Z (m) R (m) 
+0 53 Step 1225 Phi [V] Z [m]  
+1 49 Step 1225 Hot plate source Z (m) R (m) 
+0 54 Step 1250 Phi [V] Z [m]  
+1 50 Step 1250 Hot plate source Z (m) R (m) 
+0 55 Step 1275 Phi [V] Z [m]  
+1 51 Step 1275 Hot plate source Z (m) R (m) 
+0 56 Step 1300 Phi [V] Z [m]  
+1 52 Step 1300 Hot plate source Z (m) R (m) 
+0 57 Step 1325 Phi [V] Z [m]  
+1 53 Step 1325 Hot plate source Z (m) R (m) 
+0 58 Step 1350 Phi [V] Z [m]  
+1 54 Step 1350 Hot plate source Z (m) R (m) 
+0 59 Step 1375 Phi [V] Z [m]  
+1 55 Step 1375 Hot plate source Z (m) R (m) 
+0 60 Step 1400 Phi [V] Z [m]  
+1 56 Step 1400 Hot plate source Z (m) R (m) 
+0 61 Step 1425 Phi [V] Z [m]  
+1 57 Step 1425 Hot plate source Z (m) R (m) 
+0 62 Step 1450 Phi [V] Z [m]  
+1 58 Step 1450 Hot plate source Z (m) R (m) 
+0 63 Step 1475 Phi [V] Z [m]  
+1 59 Step 1475 Hot plate source Z (m) R (m) 
+0 64 Step 1500 Phi [V] Z [m]  
+1 60 Step 1500 Hot plate source Z (m) R (m) 
+0 65 Step 1525 Phi [V] Z [m]  
+1 61 Step 1525 Hot plate source Z (m) R (m) 
+0 66 Step 1550 Phi [V] Z [m]  
+1 62 Step 1550 Hot plate source Z (m) R (m) 
+0 67 Step 1575 Phi [V] Z [m]  
+1 63 Step 1575 Hot plate source Z (m) R (m) 
+0 68 Step 1600 Phi [V] Z [m]  
+1 64 Step 1600 Hot plate source Z (m) R (m) 
+0 69 Step 1625 Phi [V] Z [m]  
+1 65 Step 1625 Hot plate source Z (m) R (m) 
+0 70 Step 1650 Phi [V] Z [m]  
+1 66 Step 1650 Hot plate source Z (m) R (m) 
+0 71 Step 1675 Phi [V] Z [m]  
+1 67 Step 1675 Hot plate source Z (m) R (m) 
+0 72 Step 1700 Phi [V] Z [m]  
+1 68 Step 1700 Hot plate source Z (m) R (m) 
+0 73 Step 1725 Phi [V] Z [m]  
+1 69 Step 1725 Hot plate source Z (m) R (m) 
+0 74 Step 1750 Phi [V] Z [m]  
+1 70 Step 1750 Hot plate source Z (m) R (m) 
+0 75 Step 1775 Phi [V] Z [m]  
+1 71 Step 1775 Hot plate source Z (m) R (m) 
+0 76 Step 1800 Phi [V] Z [m]  
+1 72 Step 1800 Hot plate source Z (m) R (m) 
+0 77 Step 1825 Phi [V] Z [m]  
+1 73 Step 1825 Hot plate source Z (m) R (m) 
+0 78 Step 1850 Phi [V] Z [m]  
+1 74 Step 1850 Hot plate source Z (m) R (m) 
+0 79 Step 1875 Phi [V] Z [m]  
+1 75 Step 1875 Hot plate source Z (m) R (m) 
+0 80 Step 1900 Phi [V] Z [m]  
+1 76 Step 1900 Hot plate source Z (m) R (m) 
+0 81 Step 1925 Phi [V] Z [m]  
+1 77 Step 1925 Hot plate source Z (m) R (m) 
+0 82 Step 1950 Phi [V] Z [m]  
+1 78 Step 1950 Hot plate source Z (m) R (m) 
+0 83 Step 1975 Phi [V] Z [m]  
+1 79 Step 1975 Hot plate source Z (m) R (m) 
+0 84 Step 2000 Phi [V] Z [m]  
+1 80 Step 2000 Hot plate source Z (m) R (m) 
+0 85 Step 2000 Phi [V] Z [m]  
+1 81 Step 2000 Phi [V] Z [m]  

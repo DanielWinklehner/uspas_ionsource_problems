@@ -22,7 +22,7 @@ w3d.solvergeom = w3d.RZgeom
 # --- Basic parameters
 channel_radius     = 15.*cm
 extractor_voltage  = -93.*kV
-diode_current      = 1.
+diode_current      = 6.
 
 # --- Setup source plate
 source_radius = channel_radius
