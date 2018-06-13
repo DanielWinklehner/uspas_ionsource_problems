@@ -8,6 +8,10 @@ sudo python -m pip install numpy
 sudo python3 -m pip install numpy
 sudo python -m pip install scipy
 sudo python3 -m pip install scipy
+sudo python -m pip install matplotlib
+sudo python3 -m pip install matplotlib
+sudo apt-get install python-tk
+sudo apt-get install python3-tk
 mkdir ~/src
 cd ~/src
 git clone https://bitbucket.org/dpgrote/pygist.git

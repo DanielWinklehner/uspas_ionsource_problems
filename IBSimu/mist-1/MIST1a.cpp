@@ -45,9 +45,9 @@ double fe = 0.0;             // scc factor (override by command line)
 double scc_onset = 143.0e-3; // beginning of space charge compensation (m)
 
 // ** Voltages (can be overridden by command line) ** //
-double VSource = 8.0e3;     // V
-double VPuller = -1.0e3;     // V
-double VLens = 7.0e3;       // V
+double VSource = 20.0e3;     // V
+double VPuller = -2.0e3;     // V
+double VLens = 16.2e3;       // V
 double VRepeller = 0.0;     // V
 
 // ** Geometry ** //
@@ -62,8 +62,8 @@ double h = 0.2e-3;  // cell size (m)
 double r_source = 2.0e-3;   // m
 double r_plasma = 6.0e-3;  // m
 
-double I_p1p = 10e-3;   // proton current (A)
-double I_h2p = 20e-3;   // H2+ current (A)
+double I_p1p = 2e-3;   // proton current (A)
+double I_h2p = 4e-3;   // H2+ current (A)
 
 double Te = 3.0;  // electron temperature (eV)
 double Ti = 2.0;  // ion temperature (eV)
@@ -80,7 +80,7 @@ double cd_h2p = J_h2p / v_h2p;  // C/m^3
 double n_p1p = cd_p1p / echarge;  // 1/m^3
 double n_h2p = cd_h2p / echarge;  // 1/m^3
 
-double NPart = 120000;  // number of macroparticles per species
+double NPart = 50000;  // number of macroparticles per species
 
 //double E0 = 0.5 * (Te + Ti);
 double E0 = Te + Ti;
