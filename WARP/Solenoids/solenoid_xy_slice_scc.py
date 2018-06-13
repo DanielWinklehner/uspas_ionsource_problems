@@ -4,27 +4,74 @@ import numpy as np
 
 __author__ = "Daniel Winklehner"
 __doc__ = """
-Warp Script with a dipole magnet for LEBT demonstrations.
+Warp Script with a simple solenoid lattice to demonstrate space charge compensation.
 
-USPAS June 2018
+USPAS Jan 2018
 """
 
-class MyColors(object):
-    def __init__(self):
-        """
-        Constructor
-        """
-        self.colors = ['#4B82B8',
-                       '#B8474D',
-                       '#95BB58',
-                       '#234B7C',
-                       '#8060A9',
-                       '#53A2CB',
-                       '#FC943B']
+def coulomblog(ne, q, vb):
+    """
+    returns the coulomb logarithm
+    """
+    b_90 = q * echarge**2 / 4 / np.pi / eps0 / emass / vb**2
+    om_pe = np.sqrt(ne * echarge**2 / (emass * eps0))
+    b_max = vb / om_pe
+    return 4.0 * np.pi * np.log(b_max / b_90)
 
-    def __getitem__(self, item):
-        return self.colors[int(item % 7)]
+def set_compensated_beam():
+    """
+    Calculate the neutralization according to Gabovich's formula
+    """
+    global fe
 
+    V = 30000  # beam energy in eV
+    pressure = 1e-7  # Torr
+    sigma_i = np.array([5e-20])  # ion production cross-section of 30 keV p on (m^2)
+    sigma_e = np.array([1e-20])  # electron production cross-section of 30 keV p on H2 (m^2)
+    n0 = 133.322 * pressure / boltzmann / 300  # residual gas density at room temp (300 K)
+    Tr = 300 # Room temperature in K (~300 K)
+    PHIi = 15.51
+    Ti = 5  # secondary ion temperature in eV (guess)
+    mi = 2  # ~Mass of H2 in amu  (assuming residual gas is H2)
+    vi = np.sqrt(echarge * Ti * 2 / (mi * amu))
+    I = np.array([i_beam / NParticles * protons.getn()])
+    q = np.array([1])
+    m = np.array([1.0072766])
+    vb = np.array([top.vbeam])
+    # print("vb = ", vb, "m/s")
+    r0 = 2.0 * np.std(protons.getx())
+    # print("r0 = ", 1000.0*r0, "mm")
+    # print("I = ", 1000*I," mA")
+
+    delta_phi_full = np.sum(I / (4 * np.pi * vb * eps0))
+    #print("delta_phi_full = ", delta_phi_full)
+
+    nb = I / (echarge * q * vb * np.pi * r0**2)
+    ni = r0 * n0 * nb * vb * sigma_i / (2 * vi)
+    ne = np.sum(q * nb + ni)
+    #print("ne = ", ne)
+    #print("nb = ", nb)
+
+    L = coulomblog(ne, q, vb)
+    #print("L = ", L)
+
+    chi = np.sqrt(ne / n0 * np.sum(I * m * amu * L) / np.sum(I * sigma_e / q) * \
+                  echarge**2.0 / (4.0 * np.pi * eps0)**2.0 * PHIi * 3.0 / emass / V) / delta_phi_full
+
+    neut = (1.0 + 0.5 * chi**2.0 - 0.5 * chi * np.sqrt(4.0 + chi**2.0))
+    
+    if neut >= 0.999:
+        neut = 0.999
+
+    #print("fe = ", neut)
+
+    fe.append(neut)
+
+    # Reset weigths and beam current according to space charge compensation
+    Weight = I * top.sp_fract / (top.vbeam_s * echarge * top.zion_s * protons.getn())
+    top.ibeam_s = (1.0 - neut) * I
+    top.pgroup.sw = (1.0 - neut) * Weight
+    
 def multiplot_init(beam_species):
 
     if not isinstance(beam_species, list):
@@ -36,26 +83,26 @@ def multiplot_init(beam_species):
     ax4 = plt.subplot2grid((2, 4), (1, 2))
     ax5 = plt.subplot2grid((2, 4), (1, 3))
 
-    for i, species in enumerate(beam_species):
+    for species in beam_species:
 
         ax2.scatter(1e3*species.getx(), 1e3*species.gety(),
-                    s=0.5, label="{}".format(species.name), color=mycolors[i])
+                    s=0.5, label="{}".format(species.name))
         ax3.scatter(1e3*species.getx(), 1e3*species.getxp(),
-                    s=0.5, label="{}".format(species.name), color=mycolors[i])
+                    s=0.5, label="{}".format(species.name))
 
     plt.sca(ax2)
     plt.legend
     plt.xlabel("x (mm)")
     plt.ylabel("y (mm)")
-    plt.title("Initial Cross-Section")
+    plt.title("Init Cross-Section")
     ax2.set_aspect(1)
 
     plt.sca(ax3)
     plt.legend
     plt.xlabel("x (mm)")
     plt.ylabel("x' (mrad)")
-    plt.title("Initial XX' Phase Space")
- #   ax3.set_aspect(1)
+    plt.title("Init XX' Phase Space")
+    ax3.set_aspect(1)
     
     plt.sca(ax4)
     plt.legend
@@ -69,21 +116,22 @@ def multiplot_init(beam_species):
     plt.xlabel("x (mm)")
     plt.ylabel("x' (mrad)")
     plt.title("Final XX' Phase Space")
- #   ax5.set_aspect(1)
+    ax5.set_aspect(1)
     
     return plt.gcf(), [ax1, ax2, ax3, ax4, ax5]
+
 
 def multiplot_fin(ax, beam_species):
 
     if not isinstance(beam_species, list):
         beam_species = [beam_species]
 
-    for i, species in enumerate(beam_species):
+    for species in beam_species:
 
         ax[3].scatter(1e3*species.getx(), 1e3*species.gety(),
-                      s=0.5, label="{}".format(species.name), color=mycolors[i])
+                    s=0.5, label="{}".format(species.name))
         ax[4].scatter(1e3*species.getx(), 1e3*species.getxp(),
-                    s=0.5, label="{}".format(species.name), color=mycolors[i])
+                    s=0.5, label="{}".format(species.name))
 
     return 0
 
@@ -92,24 +140,23 @@ top.pline2   = "xy-slice simulation: solenoid channel"
 top.pline1   = " "
 
 setup()
-mycolors = MyColors()
 
 top.runmaker = "USPAS"
 
 # Define some user variables
 e_kin = 30.0 * keV    # kinetic energy [eV]
-emit = 30.0e-7        # rms edge emittance [m-rad]
-i_beam = 0.3 * mA     # beam current per species [A]
-r_x = 5.0 * mm        # beam edge in x [m]
-r_y = 5.0 * mm        # beam edge in y [m]
-r_xp = 1.0e-3         # initial beam divergence [rad]
+emit = 10.0e-7        # rms edge emittance [m-rad]
+i_beam = 10.0 * mA     # beam current per species [A]
+r_x = 10.0 * mm       # beam edge in x [m]
+r_y = 10.0 * mm       # beam edge in y [m]
+r_xp = 10.0e-3        # initial beam divergence [rad]
 r_yp = r_xp           # initial beam divergence [rad]
 NParticles = 10000
 
 # Define ion species
 protons = Species(type=Proton, charge_state = +1, name = "Protons")
-hy2plus = Species(type=Dihydrogen, charge_state = +1, name = "H2+")
-beam_species = [protons, hy2plus]
+beam_species = [protons]  # Cave: Even though the space charge compensation can only handle one species,
+                          # we have to make a list here so that the rest of the script works
 
 for beam in beam_species:
     beam.ekin     = e_kin       # kinetic energy of beam particle [eV]
@@ -122,7 +169,7 @@ for beam in beam_species:
 
     # This routine will calculate vbeam and other quantities.
     derivqty()
-    
+
     # Beam centroid and envelope initial conditions
     beam.x0  = 0.0   # initial x-centroid xc = <x> [m]
     beam.y0  = 0.0   # initial y-centroid yc = <y> [m]
@@ -132,47 +179,52 @@ for beam in beam_species:
     beam.b0  = r_y   # initial y-envelope edge b = 2*sqrt(<(y-yc)^2>) [m]
     beam.ap0 = r_xp  # initial x-envelope angle ap = a' = d a/ds [rad]
     beam.bp0 = r_yp  # initial y-envelope angle bp = b' = d b/ds [rad]
-    
-# Set up lattice
+
+# Set up solenoid lattice
 run_length = 3.6
-pipe_radius = 50.0e-3
-dipo_ang = 90.0 * np.pi / 180.0  # Bend by 90 degrees (rad)
-dipo_r = 1.0  # 1 m bending radius
-dipo_zs = 1.0  # Start the bend after 1 m
-dipo_ze = dipo_zs + dipo_ang * dipo_r
-dipo_by = 1.672623e-27 * protons.vbeam / echarge / dipo_r  # B*rho/r = mv/p/r
-dipo_by_scaling = 1.0
+drift_length = 0.6
+solenoid_length = 0.4
+solenoid_radius = 7.5e-2
 
-# set up Dipole
-# Note that by default, dipo elements will be created with the appropriate By to steer a beam
-# (described by the first species) around the bend element. To turn this off, set top.diposet = false.
-##ASSIGNMENT: WARP Task 1 - Change the face angles to see double-focusing, optional: box magnet
-top.diposet = False
-face_angle_deg = 0.0
-face_ang = np.tan(face_angle_deg / 180.0 * np.pi)
-addnewbend(dipo_zs, dipo_ze, dipo_r)
-addnewdipo(dipo_zs, dipo_ze, by=dipo_by_scaling*dipo_by, ta=face_ang, tb=face_ang)
+solenoid_zi = [drift_length + i * solenoid_length + i * drift_length for i in range(3)]
+solenoid_ze = [drift_length + (i + 1) * solenoid_length + i * drift_length for i in range(3)]
 
-# Set up conducting pipe
-pipe = ZCylinderOut(radius=pipe_radius, zlower=0.0, zupper=run_length)
+# Solenoids are created here
+addnewsolenoid(zi=solenoid_zi[0],
+               zf=solenoid_ze[0],
+               ri=solenoid_radius,
+               maxbz=0.115)
+
+addnewsolenoid(zi=solenoid_zi[1],
+               zf=solenoid_ze[1],
+               ri=solenoid_radius,
+               maxbz=0.075)
+
+addnewsolenoid(zi=solenoid_zi[2],
+               zf=solenoid_ze[2],
+               ri=solenoid_radius,
+               maxbz=0.12)
+
+# Pipe in the solenoid transport
+pipe = ZCylinderOut(radius=solenoid_radius, zlower=0.0, zupper=run_length)
 conductors=pipe
 
 # set up particle termination at cylindrical wall
-top.prwall = pipe_radius
+top.prwall = solenoid_radius
 
 n_grid = 256  # number of grid cells in x and y direction
 w3d.nx = n_grid
 w3d.ny = n_grid
 
-w3d.xmmax =  pipe_radius  # x-grid max limit [m]
-w3d.xmmin = -pipe_radius  # x-grid min limit [m]
-w3d.ymmax =  pipe_radius  # y-grid max limit [m]
-w3d.ymmin = -pipe_radius  # y-grid min limit [m]
+w3d.xmmax =  solenoid_radius  # x-grid max limit [m]
+w3d.xmmin = -solenoid_radius  # x-grid min limit [m]
+w3d.ymmax =  solenoid_radius  # y-grid max limit [m]
+w3d.ymmin = -solenoid_radius  # y-grid min limit [m]
 
 # Particle distribution options
+w3d.distrbtn = "KV" # initial distribution "KV" for K-V, "WB" for Waterbag
+
 top.npmax = NParticles
-# ASSIGNEMENT for LEBT Task 1 change type of distribution
-w3d.distrbtn = "KV"          # initial distribution "KV" for K-V, "WB" for Waterbag
 
 # Random number options to use in loading
 w3d.xrandom  = "digitrev"    # load x,y,z  with digitreverse random numbers
@@ -208,14 +260,15 @@ fieldsolve()
 nsteps = int(np.ceil(run_length/wxy.ds))
 
 x_rms = []
-y_rms = []
 for species in beam_species:
     x_rms.append(np.empty(nsteps+1))
     x_rms[-1][0] = 2.0 * np.std(species.getx())
-    y_rms.append(np.empty(nsteps+1))
-    y_rms[-1][0] = 2.0 * np.std(species.gety())
     
 zpos = 0.0
+
+## ASSIGNMENT for WARP Task 2c: Uncomment to include space charge compensation
+#fe = []
+#installbeforestep(set_compensated_beam)
 
 # Prepare plot axes and plot initial cross-section and phase space
 fig, ax = multiplot_init(beam_species)
@@ -227,17 +280,18 @@ for i in range(nsteps):
 
     for j, species in enumerate(beam_species):
         x_rms[j][i+1] = 2.0 * np.std(species.getx())
-        y_rms[j][i+1] = 2.0 * np.std(species.gety())
-        
+
+    # zpos = np.round(top.zbeam, 8)
+
 multiplot_fin(ax, beam_species)
 plt.sca(ax[0])
 
 for i, species in enumerate(beam_species):
-    plt.plot(np.arange(nsteps+1) * wxy.ds, x_rms[i], label="{}, X".format(species.name), color=mycolors[i])
-    plt.plot(np.arange(nsteps+1) * wxy.ds, y_rms[i], linestyle="--", label="{}, Y".format(species.name), color=mycolors[i])
-    
-plt.axvline(dipo_zs, ls="--", color='black')
-plt.axvline(dipo_ze, ls="--", color='black')
+    plt.plot(np.arange(nsteps+1) * wxy.ds, x_rms[i], label="{}, X".format(species.name))
+
+for zi, ze in zip(solenoid_zi, solenoid_ze):
+    plt.axvline(zi, ls="--", color='black')
+    plt.axvline(ze, ls="--", color='black')
 
 plt.xlabel("z (m)")
 plt.ylabel("x (m)")
@@ -245,6 +299,10 @@ plt.title("2*RMS Envelopes")
 plt.legend()
 plt.xlim(0.0, run_length)
 plt.ylim(0.0, None)
+
+## ASSIGNMENT for WARP Task 2c: Uncomment to see fe plot
+#ax[0].twinx()
+#plt.plot(np.arange(nsteps) * wxy.ds, np.array(fe), color='green')
 
 plt.tight_layout()
 plt.show()

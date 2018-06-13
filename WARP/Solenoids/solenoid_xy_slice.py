@@ -89,12 +89,11 @@ r_xp = 10.0e-3        # initial beam divergence [rad]
 r_yp = r_xp           # initial beam divergence [rad]
 NParticles = 10000
 
+## ASSIGNMENT for WARP Task 2b: Uncomment hy2plus and add it to the list below
 # Define ion species
 protons = Species(type=Proton, charge_state = +1, name = "Protons")
 #hy2plus = Species(type=Dihydrogen, charge_state = +1, name = "H2+")
-
-## ASSIGNMENT for LEBT Task 1: Uncomment H2+ above and add it to the list below
-beam_species = [protons]
+beam_species = [protons]  # change to: [protons, hy2plus]
 
 for beam in beam_species:
     beam.ekin     = e_kin       # kinetic energy of beam particle [eV]
@@ -127,6 +126,8 @@ solenoid_radius = 7.5e-2
 solenoid_zi = [drift_length + i * solenoid_length + i * drift_length for i in range(3)]
 solenoid_ze = [drift_length + (i + 1) * solenoid_length + i * drift_length for i in range(3)]
 
+# Solenoids are created here
+# ASSIGNMENT for WARP Task 2b: Change fields to appropriate values to focus other species
 addnewsolenoid(zi=solenoid_zi[0],
                zf=solenoid_ze[0],
                ri=solenoid_radius,
@@ -161,7 +162,7 @@ w3d.ymmin = -solenoid_radius  # y-grid min limit [m]
 
 # Particle distribution options
 top.npmax = NParticles
-# ASSIGNEMENT for LEBT Task 1 change type of distribution
+# ASSIGNEMENT for WARP Task 2a: change type of distribution
 w3d.distrbtn = "KV"          # initial distribution "KV" for K-V, "WB" for Waterbag
 
 # Random number options to use in loading
